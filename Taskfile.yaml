@@ -1,0 +1,12 @@
+version: "3"
+
+tasks:
+  run:
+    desc: Runs the code.
+    cmds:
+    - dart run -r aoc2023 {{.CLI_ARGS}}
+
+  create:next:
+    desc: Creates a template for the next day.
+    cmds:
+    - python3 create_template.py
