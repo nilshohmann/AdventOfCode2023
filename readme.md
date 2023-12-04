@@ -5,6 +5,12 @@ Solutions for [Advent of Code 2023](https://adventofcode.com/2023) written in da
 Run as:
 
 ```bash
+task run
+
+# or
+task run -- <day>
+
+#or
 dart run -r aoc2023 [day]
 ```
 
