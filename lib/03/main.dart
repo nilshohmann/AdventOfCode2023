@@ -21,7 +21,7 @@ int _determineSumOfPartNumbers(String data) {
   var result = 0;
 
   for (final (x, y, length) in digits) {
-    if (_isPartInRange(lines, y, x, length)) {
+    if (_isPartInRange(lines, x, y, length)) {
       result += int.parse(lines[y].substring(x, x + length));
     }
   }
@@ -93,21 +93,16 @@ List<Digit> _findDigits(List<String> lines) {
   return results;
 }
 
-bool _isPartInRange(List<String> lines, int y, int x, int length) {
-  // print('($x, $y) - $length');
-
+bool _isPartInRange(List<String> lines, int x, int y, int length) {
   final y1 = max(y - 1, 0);
   final y2 = min(y + 1, lines.length - 1);
 
   final x1 = max(x - 1, 0);
   final x2 = min(x + length, lines[0].length - 1);
 
-  // print('($x1, $y1) -> ($x2, $y2)');
-
   for (var ay = y1; ay <= y2; ay++) {
     for (var ax = x1; ax <= x2; ax++) {
       if (!nonMachineParts.contains(lines[ay][ax])) {
-        // print(lines[ay][ax]);
         return true;
       }
     }
