@@ -1,24 +1,17 @@
 import 'dart:io';
+import 'dart:mirrors';
 
-import 'package:aoc2023/01/main.dart' as day01;
-import 'package:aoc2023/02/main.dart' as day02;
-import 'package:aoc2023/03/main.dart' as day03;
-import 'package:aoc2023/04/main.dart' as day04;
-
-final tasksForDay = <int, void Function()>{
-  1: day01.main,
-  2: day02.main,
-  3: day03.main,
-  4: day04.main,
-};
+import 'package:aoc2023/riddle.dart';
 
 void main(List<String> arguments) {
+  final riddles = _findAllRiddles();
+
   int? day = arguments.isEmpty ? null : int.tryParse(arguments[0]);
 
-  while (day == null || !tasksForDay.containsKey(day)) {
+  while (day == null || !riddles.any((r) => r.day == day)) {
     stdout.writeln('Available days:');
-    for (var d in tasksForDay.keys) {
-      stdout.writeln('Day $d');
+    for (var riddle in riddles) {
+      stdout.writeln('Day ${riddle.day}');
     }
 
     stdout.write('Which day do want to execute? ');
@@ -26,5 +19,25 @@ void main(List<String> arguments) {
   }
 
   stdout.writeln('Executing tasks for day $day...');
-  tasksForDay[day]!();
+  riddles.singleWhere((r) => r.day == day).solve();
+}
+
+List<Riddle> _findAllRiddles() {
+  final classes = currentMirrorSystem()
+      .libraries
+      .values
+      .where((e) => e.simpleName == Symbol.empty)
+      .map((e) => e.declarations.values.whereType<ClassMirror>().singleOrNull)
+      .nonNulls;
+  final riddleType =
+      classes.singleWhere((e) => e.simpleName == Symbol('Riddle'));
+
+  final riddles = classes
+      .where((e) => !e.isAbstract && e.isAssignableTo(riddleType))
+      .map((e) => e.newInstance(Symbol.empty, <dynamic>[]).reflectee as Riddle)
+      .toList();
+
+  riddles.sort((a, b) => a.day.compareTo(b.day));
+
+  return riddles;
 }

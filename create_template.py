@@ -20,22 +20,31 @@ if __name__ == '__main__':
   open(os.path.join(day_path, 'readme.md'), 'a').close()
 
   with open(os.path.join(day_path, 'main.dart'), 'a') as file:
+    padded_day = f'0{day}'[-2:]
     file.write(
-f'''import \'package:aoc2023/utils.dart\';
+f'''import 'dart:async';
 
-Future main() async {{
-  final data = await readTaskInput(\'{f'0{day}'[-2:]}/input.txt\');
+import 'package:aoc2023/riddle.dart';
+import 'package:aoc2023/utils.dart';
 
-  printResultsHeader();
-  await runTask<int>('1', () async => _calculatePart1(data));
-  await runTask<int>('2', () async => _calculatePart2(data));
-}}
+class Day{padded_day} extends Riddle {{
+  late final String data;
 
-int _calculatePart1(String data) {{
-  return 0;
-}}
+  Day{padded_day}() : super(day: {day});
 
-int _calculatePart2(String data) {{
+  @override
+  Future prepare() async {{
+    data = await readTaskInput('{padded_day}/input.txt');
+  }}
+
+  @override
+  FutureOr solvePart1() {{
     return 0;
+  }}
+
+  @override
+  FutureOr solvePart2() {{
+    return 0;
+  }}
 }}
 ''')

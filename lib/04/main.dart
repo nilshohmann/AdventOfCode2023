@@ -1,66 +1,74 @@
+import 'dart:async';
+
+import 'package:aoc2023/riddle.dart';
 import 'package:aoc2023/utils.dart';
 
-Future main() async {
-  final data = await readTaskInput('04/input.txt');
+class Day04 extends Riddle {
+  late final String data;
 
-  printResultsHeader();
-  await runTask<int>('1', () async => _calculateCardsValue(data));
-  await runTask<int>('2', () async => _calculateActualCardsValue(data));
-}
+  Day04() : super(day: 4);
 
-int _calculateCardsValue(String data) {
-  var result = 0;
+  @override
+  Future prepare() async {
+    data = await readTaskInput('04/input.txt');
+  }
 
-  final lines = data.split('\n');
-  for (final line in lines) {
-    final (_, content) = line.splitIntoTwo(': ');
-    final (left, right) =
-        content.trimLeft().replaceAll('  ', ' ').splitIntoTwo(' | ');
+  @override
+  FutureOr solvePart1() {
+    var result = 0;
 
-    final winningNumbers = left.split(' ').map((p) => int.parse(p)).toList();
-    final myNumbers = right.split(' ').map((p) => int.parse(p)).toList();
+    final lines = data.split('\n');
+    for (final line in lines) {
+      final (_, content) = line.splitIntoTwo(': ');
+      final (left, right) =
+          content.trimLeft().replaceAll('  ', ' ').splitIntoTwo(' | ');
 
-    var matches = 0;
-    for (final num in myNumbers) {
-      if (winningNumbers.contains(num)) {
-        matches++;
+      final winningNumbers = left.split(' ').map((p) => int.parse(p)).toList();
+      final myNumbers = right.split(' ').map((p) => int.parse(p)).toList();
+
+      var matches = 0;
+      for (final num in myNumbers) {
+        if (winningNumbers.contains(num)) {
+          matches++;
+        }
+      }
+
+      if (matches > 0) {
+        result += 1 << (matches - 1);
       }
     }
 
-    if (matches > 0) {
-      result += 1 << (matches - 1);
-    }
+    return result;
   }
 
-  return result;
-}
+  @override
+  FutureOr solvePart2() {
+    final lines = data.split('\n');
+    final copies = List.generate(lines.length, (_) => 1);
 
-int _calculateActualCardsValue(String data) {
-  final lines = data.split('\n');
-  final copies = List.generate(lines.length, (_) => 1);
+    var currentLine = 0;
+    for (final line in lines) {
+      final (_, content) = line.splitIntoTwo(': ');
+      final (left, right) =
+          content.trimLeft().replaceAll('  ', ' ').splitIntoTwo(' | ');
 
-  var currentLine = 0;
-  for (final line in lines) {
-    final (_, content) = line.splitIntoTwo(': ');
-    final (left, right) =
-        content.trimLeft().replaceAll('  ', ' ').splitIntoTwo(' | ');
+      final winningNumbers = left.split(' ').map((p) => int.parse(p)).toList();
+      final myNumbers = right.split(' ').map((p) => int.parse(p)).toList();
 
-    final winningNumbers = left.split(' ').map((p) => int.parse(p)).toList();
-    final myNumbers = right.split(' ').map((p) => int.parse(p)).toList();
-
-    var matches = 0;
-    for (final num in myNumbers) {
-      if (winningNumbers.contains(num)) {
-        matches++;
+      var matches = 0;
+      for (final num in myNumbers) {
+        if (winningNumbers.contains(num)) {
+          matches++;
+        }
       }
+
+      for (var i = 0; i < matches && i < lines.length; i++) {
+        copies[currentLine + 1 + i] += copies[currentLine];
+      }
+
+      currentLine++;
     }
 
-    for (var i = 0; i < matches && i < lines.length; i++) {
-      copies[currentLine + 1 + i] += copies[currentLine];
-    }
-
-    currentLine++;
+    return copies.reduce((value, element) => value + element);
   }
-
-  return copies.reduce((value, element) => value + element);
 }
