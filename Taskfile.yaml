@@ -9,4 +9,4 @@ tasks:
   create:next:
     desc: Creates a template for the next day.
     cmds:
-    - python3 create_template.py
+    - dart bin/create_next_template.dart
