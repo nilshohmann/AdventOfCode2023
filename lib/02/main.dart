@@ -13,7 +13,7 @@ class Day02 extends Riddle {
 
   @override
   Future prepare() async {
-    final data = await readTaskInput('02/input.txt');
+    final data = await readRiddleInput('02/input.txt');
 
     games = data.split('\n').map(_parseGame).toList();
   }

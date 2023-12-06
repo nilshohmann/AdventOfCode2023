@@ -1,10 +1,15 @@
 import 'dart:io';
-import 'dart:mirrors';
 
+import 'package:aoc2023/01/main.dart';
+import 'package:aoc2023/02/main.dart';
+import 'package:aoc2023/03/main.dart';
+import 'package:aoc2023/04/main.dart';
+import 'package:aoc2023/05/main.dart';
+import 'package:aoc2023/06/main.dart';
 import 'package:aoc2023/riddle.dart';
 
 void main(List<String> arguments) {
-  final riddles = _findAllRiddles();
+  final riddles = _allRiddles();
 
   int? day = arguments.isEmpty ? null : int.tryParse(arguments[0]);
 
@@ -22,22 +27,13 @@ void main(List<String> arguments) {
   riddles.singleWhere((r) => r.day == day).solve();
 }
 
-List<Riddle> _findAllRiddles() {
-  final classes = currentMirrorSystem()
-      .libraries
-      .values
-      .where((e) => e.simpleName == Symbol.empty)
-      .map((e) => e.declarations.values.whereType<ClassMirror>().singleOrNull)
-      .nonNulls;
-  final riddleType =
-      classes.singleWhere((e) => e.simpleName == Symbol('Riddle'));
-
-  final riddles = classes
-      .where((e) => !e.isAbstract && e.isAssignableTo(riddleType))
-      .map((e) => e.newInstance(Symbol.empty, <dynamic>[]).reflectee as Riddle)
-      .toList();
-
-  riddles.sort((a, b) => a.day.compareTo(b.day));
-
-  return riddles;
+List<Riddle> _allRiddles() {
+  return <Riddle>[
+    Day01(),
+    Day02(),
+    Day03(),
+    Day04(),
+    Day05(),
+    Day06(),
+  ];
 }

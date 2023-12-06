@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-import os, sys
+import os
 
 def path_for_day(day: int) -> str:
   return os.path.join('lib', f'0{day}'[-2:])
@@ -25,7 +25,6 @@ if __name__ == '__main__':
 f'''import 'dart:async';
 
 import 'package:aoc2023/riddle.dart';
-import 'package:aoc2023/utils.dart';
 
 class Day{padded_day} extends Riddle {{
   late final String data;

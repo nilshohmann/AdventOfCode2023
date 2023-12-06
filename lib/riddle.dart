@@ -35,7 +35,7 @@ void _printResultsHeader() {
   print('| --- | --- | --- |');
 }
 
-Future<String> readTaskInput(String filename) async {
+Future<String> readRiddleInput(String filename) async {
   final content = await Resource('package:aoc2023/$filename').readAsString();
 
   return content.trim();

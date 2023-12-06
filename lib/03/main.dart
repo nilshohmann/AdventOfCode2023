@@ -14,7 +14,7 @@ class Day03 extends Riddle {
 
   @override
   Future prepare() async {
-    data = await readTaskInput('03/input.txt');
+    data = await readRiddleInput('03/input.txt');
   }
 
   @override
