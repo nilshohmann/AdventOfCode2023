@@ -12,3 +12,21 @@ extension StringExtensions on String {
     return split(separator).map(int.parse);
   }
 }
+
+extension ListExtension<E> on Iterable<E> {
+  Iterable<T> mapEnumerated<T>(T Function(E e, int index) toElement) sync* {
+    var index = 0;
+    for (var element in this) {
+      yield toElement(element, index);
+      index++;
+    }
+  }
+
+  List<E> sortdBy(dynamic Function(E element) selector) {
+    return sorted((a, b) => selector(a).compareTo(selector(b)));
+  }
+
+  List<E> sorted([int Function(E a, E b)? compare]) {
+    return [...this]..sort(compare);
+  }
+}
