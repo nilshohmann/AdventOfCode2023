@@ -3,7 +3,8 @@ import 'dart:math';
 
 import 'package:aoc2023/riddle.dart';
 
-typedef Digit = (int x, int y, int length);
+typedef Point = ({int x, int y});
+typedef Digit = ({int x, int y, int length});
 
 const String _nonMachineParts = '.0123456789';
 
@@ -24,9 +25,10 @@ class Day03 extends Riddle {
 
     var result = 0;
 
-    for (final (x, y, length) in digits) {
-      if (_isPartInRange(lines, x, y, length)) {
-        result += int.parse(lines[y].substring(x, x + length));
+    for (final digit in digits) {
+      if (_isPartInRange(lines, digit.x, digit.y, digit.length)) {
+        result += int.parse(
+            lines[digit.y].substring(digit.x, digit.x + digit.length));
       }
     }
 
@@ -38,15 +40,15 @@ class Day03 extends Riddle {
     final lines = data.split('\n');
     final digits = _findDigits(lines);
 
-    var gears = <(int x, int y), List<Digit>>{};
+    var gears = <({int x, int y}), List<Digit>>{};
 
-    for (final (x, y, length) in digits) {
-      var gear = _findAdjacentGear(lines, y, x, length);
+    for (final digit in digits) {
+      var gear = _findAdjacentGear(lines, digit.y, digit.x, digit.length);
       if (gear != null) {
         if (gears.containsKey(gear)) {
-          gears[gear]!.add((x, y, length));
+          gears[gear]!.add(digit);
         } else {
-          gears[gear] = <Digit>[(x, y, length)];
+          gears[gear] = <Digit>[digit];
         }
       }
     }
@@ -59,7 +61,7 @@ class Day03 extends Riddle {
       }
 
       final numbers = entry.value
-          .map((e) => int.parse(lines[e.$2].substring(e.$1, e.$1 + e.$3)))
+          .map((e) => int.parse(lines[e.y].substring(e.x, e.x + e.length)))
           .toList();
       result += numbers[0] * numbers[1];
     }
@@ -82,7 +84,7 @@ class Day03 extends Riddle {
           }
         } else {
           if (start >= 0) {
-            results.add((start, y, digits.length));
+            results.add((x: start, y: y, length: digits.length));
           }
 
           start = -1;
@@ -91,7 +93,7 @@ class Day03 extends Riddle {
       }
 
       if (start >= 0) {
-        results.add((start, y, digits.length));
+        results.add((x: start, y: y, length: digits.length));
       }
     }
 
@@ -116,22 +118,17 @@ class Day03 extends Riddle {
     return false;
   }
 
-  (int, int)? _findAdjacentGear(List<String> lines, int y, int x, int length) {
-    // print('($x, $y) - $length');
-
+  Point? _findAdjacentGear(List<String> lines, int y, int x, int length) {
     final y1 = max(y - 1, 0);
     final y2 = min(y + 1, lines.length - 1);
 
     final x1 = max(x - 1, 0);
     final x2 = min(x + length, lines[0].length - 1);
 
-    // print('($x1, $y1) -> ($x2, $y2)');
-
     for (var ay = y1; ay <= y2; ay++) {
       for (var ax = x1; ax <= x2; ax++) {
         if (lines[ay][ax] == '*') {
-          // print(lines[ay][ax]);
-          return (ax, ay);
+          return (x: ax, y: ay);
         }
       }
     }

@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:aoc2023/riddle.dart';
 import 'package:aoc2023/utils.dart';
 
-typedef Game = (int id, List<(int red, int green, int blue)> rounds);
+typedef Game = ({int id, List<({int red, int green, int blue})> rounds});
 
 class Day02 extends Riddle {
   late final List<Game> games;
@@ -22,8 +22,8 @@ class Day02 extends Riddle {
   FutureOr solvePart1() {
     var result = 0;
     for (final game in games) {
-      if (!game.$2.any((r) => r.$1 > 12 || r.$2 > 13 || r.$3 > 14)) {
-        result += game.$1;
+      if (!game.rounds.any((r) => r.red > 12 || r.green > 13 || r.blue > 14)) {
+        result += game.id;
       }
     }
 
@@ -38,10 +38,10 @@ class Day02 extends Riddle {
       var green = 0;
       var blue = 0;
 
-      for (final round in game.$2) {
-        red = max(red, round.$1);
-        green = max(green, round.$2);
-        blue = max(blue, round.$3);
+      for (final round in game.rounds) {
+        red = max(red, round.red);
+        green = max(green, round.green);
+        blue = max(blue, round.blue);
       }
 
       result += red * green * blue;
@@ -76,9 +76,9 @@ class Day02 extends Riddle {
         }
       }
 
-      return (red, green, blue);
+      return (red: red, green: green, blue: blue);
     }).toList();
 
-    return (id, rounds);
+    return (id: id, rounds: rounds);
   }
 }
