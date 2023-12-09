@@ -38,7 +38,7 @@ class Day07 extends Riddle {
         })
         .sortdBy((e) => e.value)
         .mapEnumerated((e, i) => e.bid * (i + 1))
-        .reduce((v, e) => v + e);
+        .sum();
   }
 
   int _determineJoker(List<int> hand) {

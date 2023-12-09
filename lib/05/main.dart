@@ -21,7 +21,7 @@ class Day05 extends Riddle {
   FutureOr solvePart1() {
     final dataParts = data.split('\n\n');
 
-    final seeds = dataParts[0].split(': ')[1].toInts(' ').toList();
+    final seeds = dataParts[0].split(': ')[1].splitToInts(' ').toList();
 
     final maps = _buildMaps(dataParts.skip(1));
     return _findMinimumLocation(maps, seeds);
@@ -31,7 +31,7 @@ class Day05 extends Riddle {
   FutureOr solvePart2() async {
     final dataParts = data.split('\n\n');
 
-    final seeds = dataParts[0].split(': ')[1].toInts(' ').toList();
+    final seeds = dataParts[0].split(': ')[1].splitToInts(' ').toList();
     final maps = _buildMaps(dataParts.skip(1));
 
     final tasks = List.generate(
@@ -70,7 +70,8 @@ class Day05 extends Riddle {
       final name = mapData[0].substring(0, mapData[0].length - 5);
       final entries = <(int start, int end, int diff)>[];
 
-      for (final map in mapData.skip(1).map((e) => e.toInts(' ').toList())) {
+      for (final map
+          in mapData.skip(1).map((e) => e.splitToInts(' ').toList())) {
         final start = map[1];
         final end = start + map[2] - 1;
         final diff = map[0] - start;
