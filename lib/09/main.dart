@@ -11,8 +11,7 @@ class Day09 extends Riddle {
   @override
   Future prepare() async {
     final data = await readRiddleInput('09/input.txt');
-    sensorValues =
-        data.split('\n').map((l) => l.splitToInts(' ').toList()).toList();
+    sensorValues = data.split('\n').map((l) => l.splitToInts()).toList();
   }
 
   @override

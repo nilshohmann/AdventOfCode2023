@@ -23,8 +23,8 @@ class Day04 extends Riddle {
       final (left, right) =
           content.trimLeft().replaceAll('  ', ' ').splitIntoTwo(' | ');
 
-      final winningNumbers = left.splitToInts(' ').toList();
-      final myNumbers = right.splitToInts(' ').toList();
+      final winningNumbers = left.splitToInts();
+      final myNumbers = right.splitToInts();
 
       var matches = 0;
       for (final num in myNumbers) {
@@ -52,8 +52,8 @@ class Day04 extends Riddle {
       final (left, right) =
           content.trimLeft().replaceAll('  ', ' ').splitIntoTwo(' | ');
 
-      final winningNumbers = left.splitToInts(' ').toList();
-      final myNumbers = right.splitToInts(' ').toList();
+      final winningNumbers = left.splitToInts();
+      final myNumbers = right.splitToInts();
 
       var matches = 0;
       for (final num in myNumbers) {

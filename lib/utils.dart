@@ -8,8 +8,8 @@ extension StringExtensions on String {
     return (substring(0, index), substring(index + separator.length));
   }
 
-  Iterable<int> splitToInts(String separator) {
-    return split(separator).map(int.parse);
+  List<int> splitToInts([String separator = ' ']) {
+    return split(separator).map(int.parse).toList();
   }
 }
 
