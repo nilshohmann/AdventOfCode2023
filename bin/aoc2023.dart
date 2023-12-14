@@ -12,6 +12,7 @@ import 'package:aoc2023/09/main.dart';
 import 'package:aoc2023/10/main.dart';
 import 'package:aoc2023/11/main.dart';
 import 'package:aoc2023/12/main.dart';
+import 'package:aoc2023/13/main.dart';
 import 'package:aoc2023/riddle.dart';
 
 void main(List<String> arguments) {
@@ -47,5 +48,6 @@ List<Riddle> _allRiddles() {
     Day10(),
     Day11(),
     Day12(),
+    Day13(),
   ];
 }
