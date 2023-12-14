@@ -35,4 +35,19 @@ extension ListExtension<E> on Iterable<E> {
   List<E> sorted([int Function(E a, E b)? compare]) {
     return [...this]..sort(compare);
   }
+
+  bool eq(Iterable<E> other) {
+    final i = other.iterator;
+    for (final e in this) {
+      if (!i.moveNext()) {
+        return false;
+      }
+
+      if (e != i.current) {
+        return false;
+      }
+    }
+
+    return true;
+  }
 }
