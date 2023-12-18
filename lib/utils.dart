@@ -28,6 +28,14 @@ extension ListExtension<E> on Iterable<E> {
     }
   }
 
+  Iterable<(int, E)> enumerate() sync* {
+    var index = 0;
+    for (var element in this) {
+      yield (index, element);
+      index++;
+    }
+  }
+
   List<E> sortdBy(dynamic Function(E element) selector) {
     return sorted((a, b) => selector(a).compareTo(selector(b)));
   }
