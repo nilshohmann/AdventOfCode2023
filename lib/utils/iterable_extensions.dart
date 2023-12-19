@@ -5,6 +5,14 @@ extension SumExtension<E extends num> on Iterable<E> {
 }
 
 extension IterableExtensions<E> on Iterable<E> {
+  Map<K, V> toMap<K, V>(K Function(E) keyFunc, V Function(E) valueFunc) {
+    final result = <K, V>{};
+    for (final element in this) {
+      result[keyFunc(element)] = valueFunc(element);
+    }
+    return result;
+  }
+
   Iterable<T> mapEnumerated<T>(T Function(E e, int index) toElement) sync* {
     var index = 0;
     for (final element in this) {
