@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:aoc2023/riddle.dart';
-import 'package:aoc2023/utils.dart';
+import 'package:aoc2023/utils/utils.dart';
 import 'package:collection/collection.dart';
 
 typedef Point = ({int x, int y});

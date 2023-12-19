@@ -1,28 +1,13 @@
-extension StringExtensions on String {
-  (String, String) splitIntoTwo(String separator) {
-    final index = indexOf(separator);
-    if (index < 0) {
-      throw 'Separator "$separator" not found in "$this"';
-    }
-
-    return (substring(0, index), substring(index + separator.length));
-  }
-
-  List<int> splitToInts([String separator = ' ']) {
-    return split(separator).map(int.parse).toList();
+extension SumExtension<E extends num> on Iterable<E> {
+  E sum() {
+    return reduce((v, e) => (v + e) as E);
   }
 }
 
-extension SumExtension on Iterable<int> {
-  int sum() {
-    return reduce((v, e) => v + e);
-  }
-}
-
-extension ListExtension<E> on Iterable<E> {
+extension IterableExtensions<E> on Iterable<E> {
   Iterable<T> mapEnumerated<T>(T Function(E e, int index) toElement) sync* {
     var index = 0;
-    for (var element in this) {
+    for (final element in this) {
       yield toElement(element, index);
       index++;
     }

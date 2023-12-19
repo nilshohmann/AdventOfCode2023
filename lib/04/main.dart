@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:aoc2023/riddle.dart';
-import 'package:aoc2023/utils.dart';
+import 'package:aoc2023/utils/utils.dart';
 
 class Day04 extends Riddle {
   late final String data;
