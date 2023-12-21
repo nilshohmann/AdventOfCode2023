@@ -51,4 +51,18 @@ extension IterableExtensions<E> on Iterable<E> {
 
     return true;
   }
+
+  bool all(bool Function(E) check) {
+    if (isEmpty) {
+      return false;
+    }
+
+    for (final e in this) {
+      if (!check(e)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
 }
