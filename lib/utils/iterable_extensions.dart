@@ -2,6 +2,20 @@ extension SumExtension<E extends num> on Iterable<E> {
   E sum() {
     return reduce((v, e) => (v + e) as E);
   }
+
+  E max() {
+    final i = iterator;
+    i.moveNext();
+
+    var m = i.current;
+    while (i.moveNext()) {
+      if (i.current > m) {
+        m = i.current;
+      }
+    }
+
+    return m;
+  }
 }
 
 extension IterableExtensions<E> on Iterable<E> {
